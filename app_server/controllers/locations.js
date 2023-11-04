@@ -79,6 +79,8 @@ const homelist = (req, res) => {
     },
 
   };
+  console.log(`${apiOptions.server}${path}`);
+
   request(requestOptions, (err, statusCode, body) => {
     let data = [];
     if (statusCode === 200 && body.length) {
@@ -189,7 +191,6 @@ const doAddReview = (req, res) => {
     method: 'POST',
     json: postdata
   };
-  console.log(`${apiOptions.server}${path}`);
   if (!postdata.author || !postdata.rating || !postdata.reviewText) {
     res.redirect(`/location/${locationid}/review/new?err=val`);
   } else {
