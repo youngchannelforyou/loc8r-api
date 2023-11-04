@@ -189,6 +189,7 @@ const doAddReview = (req, res) => {
     method: 'POST',
     json: postdata
   };
+  console.log(`${apiOptions.server}${path}`);
   if (!postdata.author || !postdata.rating || !postdata.reviewText) {
     res.redirect(`/location/${locationid}/review/new?err=val`);
   } else {
