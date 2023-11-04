@@ -79,7 +79,7 @@ const homelist = (req, res) => {
     },
 
   };
-  request(requestOptions, (err, { statusCode }, body) => {
+  request(requestOptions, (err, statusCode, body) => {
     let data = [];
     if (statusCode === 200 && body.length) {
       data = body.map((item) => {
