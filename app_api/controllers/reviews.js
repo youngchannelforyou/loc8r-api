@@ -1,5 +1,27 @@
 const mongoose = require("mongoose");
 const Loc = mongoose.model("Location");
+const User = mongoose.model('User');
+
+const getAuthor = (req, res, callback) => {
+    if (req.auth && req.auth.email) {
+        User
+            .findOne({ email: req.auth.email })
+            .exec((err, user) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json(err);
+                }
+                if (!user) {
+                    return res.status(404).json({ "message": "User not found" });
+                }
+                callback(req, res, user.name);
+            });
+    } else {
+        return res.status(400).json({ "message": "User not authenticated" });
+    }
+};
+
+
 
 const reviewsReadOne = (req, res) => {
     Loc
@@ -70,7 +92,7 @@ const updateAverageRating = (locationId) => {
 };
 
 
-const doAddReview = (req, res, location) => {
+const doAddReview = (req, res, location, author) => {
     if (!location) {
         res.status(404).json({ message: "Location not found" });
     } else {
@@ -86,7 +108,7 @@ const doAddReview = (req, res, location) => {
             } else {
                 updateAverageRating(location._id);
                 const thisReview = location.reviews.slice(-1).pop();
-                res.status(201).json({ "status": "2018250034 유찬영", thisReview });
+                res.status(201).json(thisReview);
             }
         });
     }
@@ -94,20 +116,22 @@ const doAddReview = (req, res, location) => {
 
 
 const reviewsCreate = (req, res) => {
-    const locationId = req.params.locationid;
-    if (locationId) {
-        Loc.findById(locationId)
-            .select("reviews")
-            .exec((err, location) => {
-                if (err) {
-                    res.status(400).json({ "status": "2018250034 유찬영", err });
-                } else {
-                    doAddReview(req, res, location);
-                }
-            });
-    } else {
-        res.status(404).json({ "status": "2018250034 유찬영", message: "Location not found" });
-    }
+    getAuthor(req, res, (req, res, userName) => {
+        const locationId = req.params.locationid;
+        if (locationId) {
+            Loc.findById(locationId)
+                .select("reviews")
+                .exec((err, location) => {
+                    if (err) {
+                        res.status(400).json({ "status": "2018250034 유찬영", err });
+                    } else {
+                        doAddReview(req, res, location);
+                    }
+                });
+        } else {
+            res.status(404).json({ "status": "2018250034 유찬영", message: "Location not found" });
+        }
+    });
 };
 
 

@@ -79,12 +79,8 @@ const homelist = (req, res) => {
     },
 
   };
-  console.log(`${apiOptions.server}${path}`);
-
-  request(requestOptions, (err, response, body) => {
+  request(requestOptions, (err, statusCode, body) => {
     let data = [];
-    const { statusCode } = response;
-    console.log(statusCode);
     if (statusCode === 200 && body.length) {
       data = body.map((item) => {
         item.distance = formatDistance(item.distance);
