@@ -1,6 +1,11 @@
 @import url("//fonts.googleapis.com/css?family=Lobster|Cabin:400,700");
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Lobster', cursive;
 }
 
@@ -48,12 +53,14 @@ legend {
   margin-bottom: 0.5em;
 }
 
-.badge-default, .btn-primary {
+.badge-default,
+.btn-primary {
   background-color: #ad1d28;
   border-color: #911821;
 }
 
-h4 a, h4 a:hover {
+h4 a,
+h4 a:hover {
   color: #fff;
 }
 
@@ -76,7 +83,7 @@ h1 small {
 }
 
 p {
-    margin-bottom: 0.65rem;
+  margin-bottom: 0.65rem;
 }
 
 a {
@@ -84,7 +91,7 @@ a {
 }
 
 a:hover {
-  color:#fff
+  color: #fff
 }
 
 body {
